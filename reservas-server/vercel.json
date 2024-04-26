@@ -8,7 +8,11 @@
     ],
     "routes": [
       {
-        "src": "/auth/(.*)",
+        "src": "/login",
+        "dest": "./src/routes/auth.routes.js"
+      },
+      {
+        "src": "/register",
         "dest": "./src/routes/auth.routes.js"
       },
       {
@@ -16,7 +20,7 @@
         "dest": "./src/routes/reserva.routes.js"
       },
       {
-        "src": "/user/(.*)",
+        "src": "/user/:username",
         "dest": "./src/routes/user.routes.js"
       },
       {
