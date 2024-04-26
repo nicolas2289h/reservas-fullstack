@@ -6,6 +6,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const authRouter = require('./routes/auth.routes.js');
 const reservaRouter = require('./routes/reserva.routes.js')
+const userRouter = require('./routes/user.routes.js')
 
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 // Rutas
 app.use(authRouter)
 app.use(reservaRouter)
+app.use(userRouter)
 
 const port = process.env.PORT || 3000
 

@@ -5,7 +5,10 @@ import axios from 'axios';
 import ModalAlert from '../components/ModalAlert';
 import BeatLoader from "react-spinners/BeatLoader";
 
-function Reservas() {
+// http://localhost:3000
+const URL_BASE = 'https://cute-dove-jumpsuit.cyclic.app'
+
+const Reservas = () => {
     const [listadoReservas, setListadoReservas] = useState([])
     const username = localStorage.getItem('username')
     const [showModal, setShowModal] = useState(false);
@@ -14,12 +17,16 @@ function Reservas() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        obtenerReservasDelUsuario(username)
+    }, [])
+
+    const obtenerReservasDelUsuario = (username) => {
         setLoading(true)
-        axios.get(`http://localhost:3000/reserva/cliente?username=${username}`)
+        axios.get(`${URL_BASE}/reserva/cliente?username=${username}`)
             .then(response => setListadoReservas(response.data))
             .catch(error => console.log(error.response))
             .finally(() => setLoading(false))
-    }, [])
+    }
 
     const modalCancelarReserva = (id) => {
         setReservaId(id)
@@ -27,7 +34,7 @@ function Reservas() {
     };
 
     const cancelarReserva = () => {
-        axios.delete(`http://localhost:3000/reserva/eliminar/${reservaId}`)
+        axios.delete(`${URL_BASE}/reserva/eliminar/${reservaId}`)
             .then(() => {
                 setListadoReservas(prevState => prevState.filter(item => item.id !== reservaId))
             })
@@ -39,41 +46,30 @@ function Reservas() {
         const fechaFormateada = fechaReserva.split('-').reverse().join('-')
         return fechaFormateada
     }
-
-    const handleLogout = () => {
-        localStorage.removeItem('username')
-        localStorage.removeItem('token')
-        navigate('/')
-    }
-
+    
     return (
-        <div>
+        <div className='container'>
+            <h3 className='text-center my-4'>Aqui podrás reservar tu Merienda</h3>
 
-            <nav className='nav-reservas d-flex justify-content-between align-items-center'>
-                <h2>Bienvenid@ {username}</h2>
-                <button className='btn-volver text-white' onClick={handleLogout}>LogOut</button>
-            </nav>
-
-            <div className='seccion-reservas'>
-                <h3 className='mb-3 text-center'>Aqui podrás reservar tu Merienda</h3>
-                <div className='container-form-reserva d-flex justify-content-center flex-wrap gap-3'>
+            <div className=''>
+                <div className='d-flex flex-wrap gap-4'>
                     {
                         loading
                             ?
-                            <BeatLoader color="#36d7b7" />
+                            <BeatLoader className='mx-auto' color="#fff" />
                             :
                             <>
-                                <FormReservas />
-                                <div className='container-listado-reservas'>
-                                    <h3 className='text-center'>Mis reservas 📝</h3>
-                                    <div>
+                                <FormReservas username={username} obtenerReservasDelUsuario={obtenerReservasDelUsuario} />
+                                <div className='bg-white form-width text-black rounded'>
+                                    <h3 className='text-center mt-1'>Mis reservas 📝</h3>
+                                    <div className=''>
                                         {listadoReservas.length == 0
                                             ?
-                                            <h5>📆 Aún no tienes reservas</h5>
+                                            <h5 className='ms-5'>📆 Aún no tienes reservas</h5>
                                             :
                                             listadoReservas.map(item => (
-                                                <div key={item.id} className='listado-reservas'>
-                                                    <p>📆 {formatearFecha(item.fecha)} ⌚ Horario: {item.horario} ☕🥐 Mesa: {item.nroMesa}</p>
+                                                <div key={item.id} className='py-2 border-bottom d-flex justify-content-evenly'>
+                                                    <p className='text-dark'>📆 {formatearFecha(item.fecha)} ⌚ Horario: {item.horario} ☕🥐 Mesa: {item.nroMesa}</p>
                                                     <button onClick={() => modalCancelarReserva(item.id)} className='btn btn-danger'>Cancelar</button>
                                                 </div>
                                             ))

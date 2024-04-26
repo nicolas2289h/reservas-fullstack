@@ -12,7 +12,9 @@ const initialForm = {
     nroMesa: null
 }
 
-const FormReservas = () => {
+const URL_BASE = 'https://cute-dove-jumpsuit.cyclic.app'
+
+const FormReservas = ({ username, obtenerReservasDelUsuario }) => {
     const [formData, setFormData] = useState(initialForm)
     const [listadoMesas, setListadoMesas] = useState(mesasData.mesas)
     const [reservas, setReservas] = useState([])
@@ -26,9 +28,9 @@ const FormReservas = () => {
     const mesActual = (mes < 10 ? '0' + mes : mes)
     const fechaHoy = `${configFecha.getFullYear()}-${mesActual}-${configFecha.getDate()}`
 
-    useEffect(()=>{
-        setFormData({...formData, cliente: localStorage.getItem('username')})
-    },[])
+    useEffect(() => {
+        setFormData({ ...formData, cliente: localStorage.getItem('username') })
+    }, [])
 
     const mostrarModalMensaje = (textoModal) => {
         setShowModal(true)
@@ -58,14 +60,14 @@ const FormReservas = () => {
 
         const token = localStorage.getItem('token')
 
-        axios.post('http://localhost:3000/reserva/guardar', formData, {
+        axios.post(`${URL_BASE}/reserva/guardar`, formData, {
             headers: {
                 Authorization: token
             }
         })
             .then(() => {
                 setFormData(initialForm)
-                window.location.reload()
+                obtenerReservasDelUsuario(username)
             })
             .catch(error => {
                 console.log(error.response)
@@ -81,7 +83,7 @@ const FormReservas = () => {
         setFormData({ ...formData, fecha });
         const token = localStorage.getItem('token')
 
-        axios.get(`http://localhost:3000/reserva/listar?fecha=${fecha}`, {
+        axios.get(`${URL_BASE}/reserva/listar?fecha=${fecha}`, {
             headers: {
                 Authorization: token
             }
@@ -99,24 +101,24 @@ const FormReservas = () => {
     }
 
     return (
-        <form className='form-reserva' action="" onSubmit={handleSubmit}>
-            <div className='form-reserva-inputs'>
-                <div className='width-fecha-horario d-flex justify-content-between align-items-center flex-column'>
+        <form className='form-control form-width' action="" onSubmit={handleSubmit}>
+            <div className='d-flex justify-content-between shadow gap-2'>
+                <div className='d-flex w-50 flex-column'>
                     <label htmlFor="fecha">Seleccioná una fecha</label>
-                    <input min={fechaHoy} className='w-25 w-100 p-1' value={formData.fecha} name='fecha' id='fecha' type="date" onChange={listarReservas} required />
+                    <input className='p-1 mb-2' min={fechaHoy} value={formData.fecha} name='fecha' id='fecha' type="date" onChange={listarReservas} required />
                 </div>
 
-                <div className='width-fecha-horario d-flex justify-content-between align-items-center flex-column'>
-                    <label htmlFor="horario">Elegí un horario (8:00 a 19:00)</label>
-                    <input className='w-25 w-100 p-1' min='08:00' max='19:00' value={formData.horario} name='horario' id='horario' type="time" onChange={handleChange} required />
+                <div className='d-flex w-50 flex-column'>
+                    <label htmlFor="horario">Elegí un horario (16:00 a 21:00)</label>
+                    <input className='p-1 mb-2' min='16:00' max='21:00' value={formData.horario} name='horario' id='horario' type="time" onChange={handleChange} required />
                 </div>
             </div>
 
             <ListaMesas listadoMesas={listadoMesas} reservas={reservas} marcarReserva={marcarReserva} />
 
-            <div className='botonera text-center'>
-                <button className='btn-reservar m-auto btn btn-primary'>Reservar</button>
-                <button className='btn-limpiar m-auto btn btn-primary' onClick={() => window.location.reload()}>Limpiar</button>
+            <div className='text-center mt-2'>
+                <button className='m-auto btn btn-primary btn-width'>Reservar</button>
+                {/* <button className='btn-limpiar m-auto btn btn-primary' onClick={() => window.location.reload()}>Limpiar</button> */}
             </div>
 
             <ModalMensajes show={showModal} texto={texto} handleClose={() => setShowModal(false)} />
