@@ -6,7 +6,7 @@ import ModalAlert from '../components/ModalAlert';
 import BeatLoader from "react-spinners/BeatLoader";
 
 // http://localhost:3000
-const URL_BASE = 'https://cute-dove-jumpsuit.cyclic.app'
+const URL_BASE = 'http://localhost:3000'
 
 const Reservas = () => {
     const [listadoReservas, setListadoReservas] = useState([])
@@ -31,7 +31,7 @@ const Reservas = () => {
     const modalCancelarReserva = (id) => {
         setReservaId(id)
         setShowModal(true)
-    };
+    }
 
     const cancelarReserva = () => {
         axios.delete(`${URL_BASE}/reserva/eliminar/${reservaId}`)

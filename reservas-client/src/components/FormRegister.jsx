@@ -12,7 +12,7 @@ const initialUserData = {
     password: '',
 }
 
-const URL_BASE = 'https://cute-dove-jumpsuit.cyclic.app'
+const URL_BASE = 'http://localhost:3000'
 
 const FormRegister = () => {
     const [formData, setFormData] = useState(initialUserData)
@@ -36,7 +36,7 @@ const FormRegister = () => {
             .then(response => {
                 console.log(response.data)
                 setFormData(initialUserData)
-                navigate('/')
+                navigate('/login')
             })
             .catch(error => setError(error.response.data.message))
             .finally(() => setLoading(false))
@@ -88,7 +88,7 @@ const FormRegister = () => {
                         </div>
                     </form>
                     <div className="text-center mt-3">
-                        <p className="mt-4 mb-0">Ya tengo una cuenta.<Link className="text-decoration-none" to="/"> <span className="text-white text-shadow">Iniciar Sesion</span></Link></p>
+                        <p className="mt-4 mb-0">Ya tengo una cuenta.<Link className="text-decoration-none" to="/login"> <span className="text-white text-shadow">Iniciar Sesion</span></Link></p>
                     </div>
                     {error && <p className="text-center mensajeError">{error}</p>}
                     <ModalMensajes show={showModal} texto={texto} handleClose={() => setShowModal(false)} />

@@ -10,7 +10,7 @@ const initialFormValues = {
     username: ''
 }
 
-const URL_BASE = 'https://cute-dove-jumpsuit.cyclic.app'
+const URL_BASE = 'http://localhost:3000'
 
 const EditarPerfil = () => {
     const { username } = useParams()
@@ -48,7 +48,7 @@ const EditarPerfil = () => {
             .catch(error => console.log(error.response.data))
             .finally(() => {
                 setLoading(false)
-                navigate('/home')
+                navigate('/')
             })
     }
 

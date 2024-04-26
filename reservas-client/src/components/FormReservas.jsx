@@ -12,7 +12,7 @@ const initialForm = {
     nroMesa: null
 }
 
-const URL_BASE = 'https://cute-dove-jumpsuit.cyclic.app'
+const URL_BASE = 'http://localhost:3000'
 
 const FormReservas = ({ username, obtenerReservasDelUsuario }) => {
     const [formData, setFormData] = useState(initialForm)
@@ -73,7 +73,7 @@ const FormReservas = ({ username, obtenerReservasDelUsuario }) => {
                 console.log(error.response)
                 if (error.response && error.response.status === 403) {
                     mostrarModalMensaje('La sesion ha expirado, inicie sesion nuevamente.')
-                    navigate('/') // Redireccionar al inicio de sesión si el token expiro
+                    navigate('/login') // Redireccionar al inicio de sesión si el token expiro
                 }
             })
     }
@@ -95,7 +95,7 @@ const FormReservas = ({ username, obtenerReservasDelUsuario }) => {
                 console.log(error.response)
                 if (error.response && error.response.status === 403) {
                     mostrarModalMensaje('La sesion ha expirado, inicie sesion nuevamente.')
-                    navigate('/') // Redireccionar al inicio de sesión si el token expiro
+                    navigate('/login') // Redireccionar al inicio de sesión si el token expiro
                 }
             })
     }

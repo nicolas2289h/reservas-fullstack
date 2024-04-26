@@ -31,7 +31,7 @@ const BasicExample = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto d-flex justify-content-between w-100">
                         <div className='d-flex'>
-                            <Nav.Link href="#" onClick={() => navigate('/home')}>Home</Nav.Link>
+                            <Nav.Link href="#" onClick={() => navigate('/')}>Home</Nav.Link>
                             <Nav.Link href='#' disabled='false' onClick={() => navegar('/menu')}>Menú</Nav.Link>
                             <Nav.Link href='#' onClick={() => navegar('/sobre-nosotros')}>Sobre Nosotros</Nav.Link>
                             <Nav.Link href='#' onClick={() => setShowModal(true)}>Contacto</Nav.Link>

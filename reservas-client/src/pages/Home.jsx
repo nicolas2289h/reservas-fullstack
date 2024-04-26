@@ -12,6 +12,7 @@ const Home = () => {
                             <p className='text-shadow'>gastronomía regional</p>
                         </h1>
                         <p className='mt-3 text-shadow'>Disfrutá una experiencia única en familia o con amigos</p>
+                        <p className='mt-3 text-shadow'>San Antonio, jujuy 🇦🇷</p>
                     </div>
                 </div>
             </div>
