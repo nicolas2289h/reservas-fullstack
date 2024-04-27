@@ -21,7 +21,7 @@ const BasicExample = () => {
 
     const handleCloseSesion = () => {
         localStorage.clear()
-        navigate('/')
+        navigate('/login')
     }
     return (
         <Navbar expand="lg" className="bg-white">
